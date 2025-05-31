@@ -43,11 +43,13 @@ class DynamicEnergyCostConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     raise ConfigValidationError(
                         "Please enter either a power sensor or an energy sensor, not both."
                     )
+                    errors["base"] = "invalid_config"
                 if user_input.get("power_sensor") and user_input.get("energy_sensor"):
                     _LOGGER.warning("Both power and energy sensors were provided")
                     raise ConfigValidationError(
                         "Please enter only one type of sensor (power or energy)."
                     )
+                    errors["base"] = "missing_sensor"
 
                 # Create the config dictionary
                 config = {
